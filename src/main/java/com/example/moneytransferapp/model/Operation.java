@@ -11,8 +11,18 @@ public class Operation {
     @JsonProperty(value = "code")
     private String code;
 
-    public String getOperationId() {
-        return operationId;
+    public Operation operationId(String operationId) {
+        this.operationId = operationId;
+        return this;
+    }
+
+    public Operation code(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public int getOperationId() {
+        return Integer.parseInt(operationId);
     }
 
     public void setOperationId(String operationId) {
@@ -25,5 +35,11 @@ public class Operation {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String toString() {
+        return String.format("using operating ID %s with code %s",
+                getOperationId(),
+                getCode());
     }
 }

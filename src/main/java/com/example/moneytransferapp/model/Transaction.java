@@ -60,4 +60,10 @@ public class Transaction {
         this.amount = amount;
         return this;
     }
+
+    public String toString() {
+        return String.format("from card No %s (valid till %s CVV is %s) to card No %s amount is %.2f %s",
+                getCardFromNumber(), getCardFromValidTill(), getCardFromCVV(), getCardToNumber(),
+                (float)(getAmount().getValue()/100), getAmount().getCurrency());
+    }
 }
