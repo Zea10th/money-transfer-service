@@ -16,25 +16,12 @@ public class Operation {
         return this;
     }
 
-    public Operation code(String code) {
-        this.code = code;
-        return this;
-    }
-
     public int getOperationId() {
         return Integer.parseInt(operationId);
     }
 
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
-
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String toString() {

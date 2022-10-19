@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResponseError {
     @JsonProperty("message")
-    private String message = null;
+    private String message;
 
     @JsonProperty("id")
-    private Integer id = null;
+    private Integer id;
 
     public ResponseError message(String message) {
         this.message = message;
@@ -19,21 +19,5 @@ public class ResponseError {
     public ResponseError id(Integer id) {
         this.id = id;
         return this;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

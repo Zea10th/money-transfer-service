@@ -12,12 +12,4 @@ public class ResponseOK {
         this.operationId = String.valueOf(id.intValue());
         return this;
     }
-
-    public String getOperationId() {
-        return operationId;
-    }
-
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
 }

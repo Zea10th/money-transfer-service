@@ -3,6 +3,9 @@ package com.example.moneytransferapp.repository;
 import com.example.moneytransferapp.model.Operation;
 import com.example.moneytransferapp.model.Transaction;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 public interface MoneyTransferRepository {
     int registerTransaction(Transaction transaction);
 
@@ -10,5 +13,9 @@ public interface MoneyTransferRepository {
 
     void registerResult(String result);
 
-    String getLogs();
+    ConcurrentHashMap<Integer, Transaction> getTransactions();
+
+    ConcurrentHashMap<Integer, Operation> getOperations();
+
+    CopyOnWriteArrayList<String> getResults();
 }

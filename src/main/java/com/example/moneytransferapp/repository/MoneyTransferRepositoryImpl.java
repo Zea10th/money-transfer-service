@@ -4,33 +4,34 @@ import com.example.moneytransferapp.model.Operation;
 import com.example.moneytransferapp.model.Transaction;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
 public class MoneyTransferRepositoryImpl implements MoneyTransferRepository {
 
-    private final ArrayList<Transaction> transactions;
-    private final ArrayList<Operation> operations;
-    private final ArrayList<String> results;
+    private final ConcurrentHashMap<Integer, Transaction> transactions;
+    private final ConcurrentHashMap<Integer, Operation> operations;
+    private final CopyOnWriteArrayList<String> results;
 
     public MoneyTransferRepositoryImpl() {
-        transactions = new ArrayList<>();
-        operations = new ArrayList<>();
-        results = new ArrayList<>();
+        transactions = new ConcurrentHashMap<>();
+        operations = new ConcurrentHashMap<>();
+        results = new CopyOnWriteArrayList<>();
     }
 
     @Override
     public int registerTransaction(Transaction transaction) {
-        transactions.add(transaction);
-        return transactions.indexOf(transaction) + 1;
+        int id = transactions.values().size();
+        transactions.put(id, transaction);
+        return id + 1;
     }
 
     @Override
     public int registerOperation(Operation operation) {
-        operations.add(operation);
-        return operations.indexOf(operation) + 1;
+        int id = operations.size();
+        operations.put(id, operation);
+        return id + 1;
     }
 
     @Override
@@ -39,23 +40,17 @@ public class MoneyTransferRepositoryImpl implements MoneyTransferRepository {
     }
 
     @Override
-    public String getLogs() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime localDate = LocalDateTime.now();
+    public ConcurrentHashMap<Integer, Transaction> getTransactions() {
+        return transactions;
+    }
 
-        StringBuilder logs = new StringBuilder();
-        logs.append("Progress report of Money Transfer Service program execution for the date ");
-        logs.append(dateFormatter.format(localDate));
-        logs.append("\n");
+    @Override
+    public ConcurrentHashMap<Integer, Operation> getOperations() {
+        return operations;
+    }
 
-        for (int i = 0; i < transactions.size(); i++) {
-            logs.append("\t").append(i + 1).append(".");
-            logs.append(" Transaction ").append(this.transactions.get(i));
-            logs.append(" ").append(this.operations.get(i));
-            logs.append(" was completed with result: ").append(this.results.get(i));
-            logs.append("\n");
-        }
-
-        return logs.toString();
+    @Override
+    public CopyOnWriteArrayList<String> getResults() {
+        return results;
     }
 }

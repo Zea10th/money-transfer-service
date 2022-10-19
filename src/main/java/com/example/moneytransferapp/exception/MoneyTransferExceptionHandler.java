@@ -1,6 +1,6 @@
 package com.example.moneytransferapp.exception;
 
-import com.example.moneytransferapp.service.MoneyTransferService;
+import com.example.moneytransferapp.service.MoneyTransferExceptionService;
 import com.fasterxml.jackson.core.JsonParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,24 +8,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
 public class MoneyTransferExceptionHandler {
 
-    private final MoneyTransferService moneyTransferService;
+    private final MoneyTransferExceptionService moneyTransferExceptionService;
 
     @Autowired
-    public MoneyTransferExceptionHandler(MoneyTransferService moneyTransferService) {
-        this.moneyTransferService = moneyTransferService;
+    public MoneyTransferExceptionHandler(MoneyTransferExceptionService moneyTransferExceptionService) {
+        this.moneyTransferExceptionService = moneyTransferExceptionService;
     }
 
-    @ExceptionHandler({HttpMessageNotReadableException.class, JsonParseException.class})
+    @ExceptionHandler({HttpMessageNotReadableException.class,
+            JsonParseException.class,
+            ResponseStatusException.class})
     ResponseEntity<String> handleBadRequestException() {
-        return moneyTransferService.getResponseError(HttpStatus.BAD_REQUEST);
+        return moneyTransferExceptionService.getResponseError(HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(RuntimeException.class)
     ResponseEntity<String> handleRuntimeException() {
-        return moneyTransferService.getResponseError(HttpStatus.INTERNAL_SERVER_ERROR);
+        return moneyTransferExceptionService.getResponseError(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
