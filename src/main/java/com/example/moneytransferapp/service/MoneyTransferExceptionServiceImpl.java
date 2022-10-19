@@ -16,7 +16,7 @@ import static com.example.moneytransferapp.utility.SerializeUtility.serialize;
 @Service
 public class MoneyTransferExceptionServiceImpl implements MoneyTransferExceptionService {
 
-    public static final Logger LOGGER = LogManager.getLogger(MoneyTransferServiceImpl.class);
+    public static final Logger LOGGER = LogManager.getLogger(MoneyTransferExceptionServiceImpl.class);
     private final MoneyTransferRepositoryImpl repository;
 
     @Autowired
