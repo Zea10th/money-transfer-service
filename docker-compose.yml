@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  money-transfer-service:
+    image: openjdk:17-alpine
+    build: Dockerfile
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+    working_dir: /
+    command:
+      - java -jar /myapp.jar
